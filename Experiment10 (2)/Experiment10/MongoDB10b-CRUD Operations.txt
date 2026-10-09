@@ -1,0 +1,296 @@
+MongoDB Atlas – Installation, Connection and CRUD Operations
+===============================================================
+
+Student MongoDB Atlas Command Prompt / mongosh Record
+
+1. CONNECT TO MONGODB ATLAS
+---------------------------
+
+Command:
+
+mongosh "mongodb+srv://cluster0.v24kq43.mongodb.net/" --username student
+
+Output:
+
+Enter password: ********
+
+Current Mongosh Log ID: 6aba1ff859f748effe008a76
+
+Connecting to: mongodb+srv://<credentials>@cluster0.v24kq43.mongodb.net/?appName=mongosh+2.12.0
+
+Using MongoDB: 8.0.32
+Using Mongosh: 2.12.0
+
+
+2. SELECT THE DATABASE
+----------------------
+
+Command:
+
+use library
+
+Output:
+
+switched to db library
+
+
+3. INSERT MULTIPLE BOOK RECORDS
+-------------------------------
+
+Command:
+
+db.books.insertMany([
+    {
+        title: "1984",
+        author: "George Orwell",
+        year: 1949,
+        genre: "Dystopian"
+    },
+    {
+        title: "The Great Gatsby",
+        author: "F. Scott Fitzgerald",
+        year: 1925,
+        genre: "Classic"
+    },
+    {
+        title: "Moby Dick",
+        author: "Herman Melville",
+        year: 1851,
+        genre: "Adventure"
+    }
+])
+
+Output:
+
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('6aba204159f748effe008a77'),
+    '1': ObjectId('6aba204159f748effe008a78'),
+    '2': ObjectId('6aba204159f748effe008a79')
+  }
+}
+
+
+4. DISPLAY ALL BOOKS
+--------------------
+
+Command:
+
+db.books.find()
+
+Output:
+
+[
+  {
+    _id: ObjectId('6aba0fac9700db0ed7285712'),
+    title: 'Python Programming',
+    author: 'John',
+    price: 500
+  },
+  {
+    _id: ObjectId('6aba204159f748effe008a77'),
+    title: '1984',
+    author: 'George Orwell',
+    year: 1949,
+    genre: 'Dystopian'
+  },
+  {
+    _id: ObjectId('6aba204159f748effe008a78'),
+    title: 'The Great Gatsby',
+    author: 'F. Scott Fitzgerald',
+    year: 1925,
+    genre: 'Classic'
+  },
+  {
+    _id: ObjectId('6aba204159f748effe008a79'),
+    title: 'Moby Dick',
+    author: 'Herman Melville',
+    year: 1851,
+    genre: 'Adventure'
+  }
+]
+
+
+5. DISPLAY BOOKS IN PRETTY FORMAT
+---------------------------------
+
+Command:
+
+db.books.find().pretty()
+
+Output:
+
+[
+  {
+    _id: ObjectId('6aba0fac9700db0ed7285712'),
+    title: 'Python Programming',
+    author: 'John',
+    price: 500
+  },
+  {
+    _id: ObjectId('6aba204159f748effe008a77'),
+    title: '1984',
+    author: 'George Orwell',
+    year: 1949,
+    genre: 'Dystopian'
+  },
+  {
+    _id: ObjectId('6aba204159f748effe008a78'),
+    title: 'The Great Gatsby',
+    author: 'F. Scott Fitzgerald',
+    year: 1925,
+    genre: 'Classic'
+  },
+  {
+    _id: ObjectId('6aba204159f748effe008a79'),
+    title: 'Moby Dick',
+    author: 'Herman Melville',
+    year: 1851,
+    genre: 'Adventure'
+  }
+]
+
+
+6. FIND A BOOK BY AUTHOR
+------------------------
+
+Command:
+
+db.books.find({
+    author: "George Orwell"
+})
+
+Output:
+
+[
+  {
+    _id: ObjectId('6aba204159f748effe008a77'),
+    title: '1984',
+    author: 'George Orwell',
+    year: 1949,
+    genre: 'Dystopian'
+  }
+]
+
+
+7. FIND BOOKS PUBLISHED AFTER 1950
+-----------------------------------
+
+Command:
+
+db.books.find({
+    year: { $gt: 1950 }
+})
+
+Output:
+
+No documents were returned.
+
+
+8. UPDATE A BOOK
+----------------
+
+Command:
+
+db.books.updateOne(
+    { title: "1984" },
+    { $set: { year: 1950 } }
+)
+
+Output:
+
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+
+
+9. VERIFY THE UPDATED BOOK
+---------------------------
+
+Command:
+
+db.books.find({
+    title: "1984"
+})
+
+Output:
+
+[
+  {
+    _id: ObjectId('6aba204159f748effe008a77'),
+    title: '1984',
+    author: 'George Orwell',
+    year: 1950,
+    genre: 'Dystopian'
+  }
+]
+
+
+10. DELETE A BOOK
+-----------------
+
+Command:
+
+db.books.deleteOne({
+    title: "The Great Gatsby"
+})
+
+Output:
+
+{ acknowledged: true, deletedCount: 1 }
+
+
+11. DISPLAY FINAL BOOK RECORDS
+------------------------------
+
+Command:
+
+db.books.find()
+
+Output:
+
+[
+  {
+    _id: ObjectId('6aba0fac9700db0ed7285712'),
+    title: 'Python Programming',
+    author: 'John',
+    price: 500
+  },
+  {
+    _id: ObjectId('6aba204159f748effe008a77'),
+    title: '1984',
+    author: 'George Orwell',
+    year: 1950,
+    genre: 'Dystopian'
+  },
+  {
+    _id: ObjectId('6aba204159f748effe008a79'),
+    title: 'Moby Dick',
+    author: 'Herman Melville',
+    year: 1851,
+    genre: 'Adventure'
+  }
+]
+
+
+RESULT
+------
+
+MongoDB Atlas was successfully connected using mongosh.
+The library database was selected and CRUD operations were performed
+successfully on the books collection.
+
+Operations demonstrated:
+1. MongoDB Atlas connection
+2. Database selection
+3. Insert
+4. Find
+5. Query using a condition
+6. Update
+7. Delete
+8. Final verification

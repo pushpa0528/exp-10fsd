@@ -1,0 +1,129 @@
+Step 1: Install MongoDB Locally Windows
+1. Download MongoDB Community Server from the official MongoDB website.
+2. Run the downloaded .msi installer.
+3. Select Complete installation.
+4. During installation, select: Install MongoD as a Service
+5. Complete the installation.
+6. MongoDB is normally installed in a directory similar to: C:\Program Files\MongoDB\Server\8.0\bin
+The version number may be different on your computer.
+
+Step 2: Verify MongoDB Installation
+Open Command Prompt.
+Run:
+mongod --version
+
+You should see output similar to:
+db version v8.x.x
+Build Info: ...
+
+Then check the MongoDB Shell:
+mongosh --version
+Example: 2.x.x
+
+Step 3: Start the Local MongoDB Server
+If MongoDB was installed as a Windows service, open Command Prompt as Administrator and run:
+net start MongoDB
+
+If it starts successfully, you will see:
+The MongoDB Server service was started successfully.
+
+You can then connect to the local MongoDB server:
+mongosh
+or:
+mongosh "mongodb://localhost:27017"
+
+You should see something similar to:
+Connecting to: mongodb://127.0.0.1:27017/
+
+Step 4: Check MongoDB Version
+After entering the mongosh shell, run:
+db.version()
+Example: 8.0.x
+
+You can also run:
+db
+Output may be:
+test
+This means you are currently using the test database.
+
+Exit MongoDB Shell
+Exit
+
+C:\Users\Dell>mongod --version
+db version v8.3.11
+Build Info: {
+ "version": "8.3.11",
+ "gitVersion": "b8b83d6e6e1aed495578ad8c6f9234ad329c9955",
+ "modules": [],
+ "allocator": "tcmalloc-gperf",
+ "environment": {
+ "distmod": "windows",
+ "distarch": "amd64",
+ "target_arch": "amd64"
+ }
+}
+
+C:\Users\Dell>mongosh --version
+2.12.0
+
+C:\Users\Dell>mongosh
+Current Mongosh Log ID: 6aba0e006f7b63cb4d25f6c3
+Connecting to: mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.12.0
+Using MongoDB: 8.3.11
+Using Mongosh: 2.12.0
+For mongosh info see: https://www.mongodb.com/docs/mongodb-shell/
+------
+The server generated these startup warnings when booting
+2026-09-24T15:12:28.557+05:30: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+------
+test> db.version()
+8.3.11
+test> db
+test
+test>
+test> exit
+
+C:\Users\Dell>mongosh "mongodb+srv://cluster0.v24kq43.mongodb.net/" --apiVersion 1 --username student
+Enter password: **********
+Current Mongosh Log ID: 6aba0f399700db0ed7285711
+Connecting to: mongodb+srv://<credentials>@cluster0.v24kq43.mongodb.net/?appName=mongosh+2.12.0
+Using MongoDB: 8.0.32 (API Version 1)
+Using Mongosh: 2.12.0
+For mongosh info see: https://www.mongodb.com/docs/mongodb-shell/
+
+Atlas atlas-of3oig-shard-0 [primary] test> db
+test
+
+Atlas atlas-of3oig-shard-0 [primary] test> db.version()
+8.0.32
+
+Atlas atlas-of3oig-shard-0 [primary] test> show dbs
+college 72.00 KiB
+admin 0 B
+local 0 B
+
+Atlas atlas-of3oig-shard-0 [primary] test> use library
+switched to db library
+
+Atlas atlas-of3oig-shard-0 [primary] library> db.createCollection("books")
+{ ok: 1 }
+
+Atlas atlas-of3oig-shard-0 [primary] library> db.books.insertOne({
+| title: "Python Programming",
+| author: "John",
+| price: 500
+| })
+| {
+  acknowledged: true,
+  insertedId: ObjectId('6aba0fac9700db0ed7285712')
+}
+
+Atlas atlas-of3oig-shard-0 [primary] library> db.books.find()
+[
+  {
+    _id: ObjectId('6aba0fac9700db0ed7285712'),
+    title: 'Python Programming',
+    author: 'John',
+    price: 500
+  }
+]
